@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Calculator() {
+        this.methods = {
+          "+": (a, b) => a + b,
+          "-": (a, b) => a - b,
+        };
+
+        this.calculate = function (str) {
+          str = str.slice(" ");
+          let split = str.split(" ");
+          let a = +split[0];
+          let op = split[1];
+          let b = +split[2];
+
+          if (!this.methods[op] || isNaN(a) || isNaN(b)) {
+            return NaN;
+          }
+          return this.methods[op](a, b);
+        };
+        this.addMethod = function (name, func) {
+          {
+            this.methods[name] = func;
+          }
+        };
+      }
+
+      let powerCalc = new Calculator();
+      powerCalc.addMethod("*", (a, b) => a * b);
+      powerCalc.addMethod("/", (a, b) => a / b);
+      powerCalc.addMethod("**", (a, b) => a ** b);
+
+      let result = powerCalc.calculate("2 ** 3");
+      console.log(result);
+
+      console.log(powerCalc.calculate("3 + 7")); // 10
+      console.log(powerCalc.calculate("3 - 7")); // -4
+      console.log(powerCalc.calculate("3 * 7")); // 21
+      console.log(powerCalc.calculate("3 / 7")); // 0.42857142857142855
+    </script>
+  </body>
+</html>
